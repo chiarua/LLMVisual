@@ -1,0 +1,8 @@
+SUMMARIZE_PROMPT： Textgen生成数据集描述 persona
+DESCRIPTION_PROMPT：Mainprocessor 从给定设计属性和数据属性信息生成完整图表及描述 persona
+DESCRIPTION_PROMPT_WITH_COMMAND：Mainprocessor 从给定设计属性和数据属性信息生成 用户希望的语义的 完整图表及描述 persona
+SUMMARIZE_INST： Textgen生成数据集描述 instr
+VEGALITE_PROMPT： Initial生成图表 persona
+MODIFY_PROMPT： Mainprocessor 更改图表 persona
+
+让persona说明白instruction会给出什么，然后instruction凑出来就好了

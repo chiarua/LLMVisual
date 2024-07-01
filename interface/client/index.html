@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>ChartSeer</title>
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+        <script type="text/javascript" src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    </head>
+    <body>
+        <div id="myModal" class="modal">
+            <div class="modal-content modal-normal">
+                <div class="modalheader">
+                    <span class="close">&times;</span>
+                    <h3>Export Charts</h3>
+                </div>
+                <div class="modalbody">
+                    <div id="exportallcharts">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- <svg t="1717506715612" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4315" width="50" height="50">
+            <path d="M521.37 840.5c-182.82 0-331.54-148.72-331.54-331.54s148.72-331.54 331.54-331.54 331.54 148.72 331.54 331.54S704.19 840.5 521.37 840.5z m0-612.08c-154.69 0-280.54 125.85-280.54 280.54S366.68 789.5 521.37 789.5s280.54-125.85 280.54-280.54-125.85-280.54-280.54-280.54z" fill="#424244" p-id="4316"></path>
+            <path d="M709.88 494.88h255.03v51.01H709.88zM57.75 494.88h255.03v51.01H57.75zM495.87 314.563V59.533h51.01v255.03zM495.878 964.067v-255.03h51.01v255.03z" fill="#424244" p-id="4317"></path>
+            <path d="M521.38 520.38m-59.48 0a59.48 59.48 0 1 0 118.96 0 59.48 59.48 0 1 0-118.96 0Z" fill="#424244" p-id="4318"></path>
+        </svg> -->
+
+        <div id="main_window">
+            <!-- <div id="toolbar">
+                <input type="file" id="datafile" name="datafile" />
+                <button id="import">Import Data & Charts</button>
+                <label id="datafile"></label>
+                <button id="export">Export Data & Charts</button>
+                <label>Variable Color Encodings: </label><span id="legend"></span>
+            </div> -->
+            <div id="panel1">
+                <span class="panel-header">Inspection</span>
+                <div id="chartview">
+                    <div class="chartcontainer"></div>
+                    <span class="chartlabel"></span>
+                    <span class="editorbuttons">
+                        <input type="text" placeholder="Modify Chart" id="refinecontent"><button id="refine"> <img src="./assets/images/edit.png" alt="..." width="12px"> Refine </button>
+                        <button id="addchart"> ADD </button>
+                    </span>
+                    <!-- <span class="editorbuttons">
+                        <button id="add" style="color:#28a745">Add</button>
+                        <button id="update" style="color:#007bff">Update</button>
+                        <button id="remove" style="color:#dc3545">Remove</button>
+                    </span> -->
+                    <div id="charteditor">
+                        <div id="chartediterdesc">
+                            <div class="title">  </div>
+                            <div class="content">  </div>
+                        </div>
+                    </div>
+                    <div id="chartcode">
+                        <div id="editorcontainer"></div>
+                    </div>
+                </div>
+                
+                <!-- <div id="charteditor">
+                    <div id="chartcomposer">
+                        <label>Mark</label><select id="ch-mark"></select><br/>
+                        <label>X</label><select id="ch-x"></select><select id="ch-xtrans"></select><br/>
+                        <label>Y</label><select id="ch-y"></select><select id="ch-ytrans"></select><br/>
+                        <label>Color</label><select id="ch-color"></select><select id="ch-colortrans"></select><br/>
+                        <label>Size</label><select id="ch-size"></select><select id="ch-sizetrans"></select><br/>
+                        <label>Shape</label><select id="ch-shape"></select><br/>
+                    </div>
+                    <span class="editorbuttons">
+                        <button id="preview1" style="color:#007bff">Preview</button>
+                        <button id="cancel1" style="color:#dc3545;">Cancel</button>
+                    </span>
+                    <div id="editorcontainer"></div>
+                    <span class="editorbuttons" id="editorbutton2">
+                        <button id="preview2" style="color:#007bff">Preview</button>
+                        <button id="cancel2" style="color:#dc3545;">Cancel</button>
+                    </span>
+                </div> -->
+            </div>
+            <div id="panel2">
+                <span class="panel-header">
+                    Summarization
+                    <!-- <span id="slider_wrapper">
+                        <i>Data/Encoding Ratio</i><label id="weight">0.50</label>
+                        <input type="range" min="0" max="100" value="50" id="weight_slider">
+                    </span>
+                    <span id="check_wrapper">
+                        <i>Annotation</i>
+                        <input type="checkbox" id="show_bubble" checked>
+                    </span> -->
+                </span>
+                <div id="genprocess">
+                    <div id="geninput">
+                        <input type="text" name="" id="" placeholder="What is the distribution of Miles_per_Gallon?"><button id="gencharts"> <img src="./assets/images/find.png" alt="..." width="18px"> generate </button>
+                    </div>
+                    <div id="coordinate" >
+                        <span class="coordinatetitle">X-coordinate:</span>
+                        <span id="xvalue" class="coordinatevalue"></span>
+                        <span class="coordinatetitle">Y-coordinate:</span>
+                        <span id="yvalue" class="coordinatevalue"></span>
+                    </div>
+                    <div id="genbuttons">
+                        <button style="position: relative;"> 
+                            <img src="./assets/images/export.png" alt="..." width="14px"> Import Data 
+                            <input type="file" id="importdata"></input>
+                        </button>
+                        <!-- <button id="importdata"> <img src="./assets/images/export.png" alt="..." width="14px"> Import Data </button> -->
+                        <button id="reset"> <img src="./assets/images/reset.png" alt="..." width="14px"> Reset </button>
+                        <button id="rollback"> <img src="./assets/images/back.png" alt="..." width="14px"> Rollback </button>
+                        <button id="exportcharts"> <img src="./assets/images/import.png" alt="" width="20px"> Export Charts </button>
+                    </div>
+                </div>
+                <div id="sumview">
+                    <!-- <img id="miaozhun" src="./assets/images/miaozhun.png" alt=""> -->
+                    <!-- <img id="dingwei" src="./assets/images/dingwei.png" alt=""> -->
+                </div>
+                <span id="datsetspan" class="panel-header">Dateset</span>
+                <div id="dataview">
+                    <table class="compact hover cell-border nowrap"></table>
+                </div>
+            </div>
+            <!-- <div id="panel5">
+                <span class="panel-header"><label>Dateset</label></span>
+                <div id="dataview">
+                    <table class="compact hover cell-border nowrap"></table>
+                </div>
+            </div> -->
+            <!-- <div id="panel3">
+                <span class="panel-header">Recommendation</span>
+                <div id="search-view">
+                    <input class="search-input" id="search-input" />
+                    <button class="search-button" id="search-button"> BUTTON </button>
+                </div>
+                <div id="suggestionview"></div>
+            </div> -->
+            <!-- 2023/4/28 -->
+            <!-- <div id="panel3">
+                <span class="panel-header">Recommendation</span>
+                
+                <div id="suggestionview"></div>
+            </div> -->
+            <!-- <div id="panel4">
+                <span class="panel-header">Charts</span>
+                <div id="allchartsview"></div>
+            </div> -->
+            <div id="panel5">
+                <span class="panel-header">Exporation Goals</span>
+                <div id="goals">
+                    <div id="goalsexplain">
+                    </div>
+                    <div id="goalinput">
+                        <!-- <input type="text" name="" id="goalTitle" placeholder="Add Goals..."><button id="addgoal"> <img src="./assets/images/edit.png" alt="..." width="18px"> Add </button>
+                        <button id="submit"> Submit </button> -->
+                    </div>
+                </div>
+            </div>
+            <div id="panel6">
+                <span class="panel-header"> Filter </span>
+                <div id="filter">
+                    <div id="columnscontent">
+                        <span>Columns:</span>
+                        <div id="columns"></div>
+                    </div>
+                    <div id="rowsandcolumnscontent">
+                        <span>#Rows: </span> <span id="rowsnum"></span> <span>#Columns: </span> <span id="columnsnum"></span>
+                        <div id="rowsandcolumns">
+                            <div class="rowsandcolumnsheader">
+                                <img src="./assets/images/filterB.png" alt="">
+                                <span>Filter</span>
+                            </div>
+                            <div class="rowsandcolumnsbody">
+                                <!-- str -->
+                                <!-- <div id="strfilter">
+                                    <div class="strheader">original</div>
+                                    <div class="strbody">
+                                        <input type="checkbox" value=""><span></span>
+                                    </div>
+                                    <div class="strfooter">
+                                        <button id="conformfilter"> Conform </button>
+                                    </div>
+                                </div> -->
+                                <!-- num -->
+                                <!-- <div id="numfilter">
+                                    <div class="numheader"></div>
+                                    <div class="numbody">
+                                            <div id="minrange">
+                                                <span>Min:</span> <span id="minnum">0</span>
+                                                <div class="minbar">
+                                                    <div class="minprogress"></div>
+                                                    <div class="mindot"></div>
+                                                </div>
+                                            </div>
+                                            <div id="maxrange">
+                                                <span>Max:</span> <span id="maxnum">300</span>
+                                                <div class="maxbar">
+                                                    <div class="maxprogress"></div>
+                                                    <div class="maxdot"></div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <div class="numfooter">
+                                        <button id="conformfilter"> Conform </button>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <!-- <div class="rowsandcolumnsfooter">
+                                <button id="newgoals"> 更新GOALS </button>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="tooltip">
+            <div class="chartcontainer"></div>
+            <span class="chartlabel"></span>
+        </div>
+        <!-- <div id="dialog" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <label for="myfile">Select a file:</label>
+                <input type="file" id="inputfile" name="myfile" /><br/>
+                <label for="myurl">Or past an url: </label>
+                <input type="text" id="inputurl" name="myurl" /><br/>
+                <p>A JSON object with the format of (see <a href="/data/cars.json" target="_blank">example</a>):<br />
+                <pre>
+{
+    charts: [...],      // chart specifications in Vega-Lite format
+    attributes: [...],  // metadata for the data attributes
+    data: [...]         // the actual data collection
+}
+                </pre></p>
+                <button id="submit">Submit</button>
+            </div>
+          
+          </div>
+        <div id="vegatest" style="visibility:hidden;"></div> -->
+    </body>    
+</html>
