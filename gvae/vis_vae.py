@@ -92,7 +92,9 @@ class VisVAE():
             one_hot[i][np.arange(len(indices), self.max_len), -1] = 1
 
         self.one_hot = one_hot
-        return self.vae.encoderMV.predict(one_hot)[0]
+        res = self.vae.encoderMV.predict(one_hot)[0]
+        print(res)
+        return res
 
     def decode(self, z):
         assert z.ndim == 2

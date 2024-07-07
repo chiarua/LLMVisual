@@ -1,5 +1,7 @@
 import json
 import os
+import random
+
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -75,6 +77,7 @@ def check_root(spec):
 
 def fix_charts(charts):
     fixed_charts = []
+    random_charts = []
     the_spec = parse_specs()
     for chart in charts:
         chart['vega-lite_code'] = fix_vegalite_spec_recur(chart['vega-lite_code'], the_spec)
@@ -87,10 +90,19 @@ def fix_charts(charts):
     print(del_lst)
     del_lst.reverse()
     for i in del_lst:
-        charts.pop(i)
+        random_charts.append(charts.pop(i))
         fixed_charts.pop(i)
-    dic = {"charts": charts, "charts_for_encode": fixed_charts}
+    dic = {"charts": charts, "charts_for_encode": fixed_charts, "random_charts": random_charts}
     return dic
+
+
+def encode(special_charts:list, n=20, lower_bound=-1, upper_bound=1):
+    l = len(special_charts)
+    res = []
+    for i in range(l):
+        random_numbers = [random.uniform(lower_bound, upper_bound) for _ in range(n)]
+        res.append(random_numbers)
+    return res
 
 
 #print(parse_specs())

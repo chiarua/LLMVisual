@@ -194,9 +194,18 @@ def encode():
         with graph.as_default():
             tf.keras.backend.set_session(sess)
             z = visvae.encode(specs)
+            print(z)
     except Exception as e:
         raise InvalidUsage(e.message)
     return jsonify(z.tolist())
+
+
+@app.route('/spencode', methods=['POST'])
+def special_encode():
+    specs = request.get_json()
+    chart_lst = specs["special_charts"]
+    return utils.encode(chart_lst)
+
 
 
 @app.route('/decode', methods=['POST'])
