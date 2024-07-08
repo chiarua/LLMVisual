@@ -202,9 +202,13 @@ def encode():
 
 @app.route('/spencode', methods=['POST'])
 def special_encode():
+    """
+    requires: {"special_charts":[]}
+    :return: list(parameter)
+    """
     specs = request.get_json()
     chart_lst = specs["special_charts"]
-    return utils.encode(chart_lst)
+    return jsonify(utils.encode(chart_lst))
 
 
 
